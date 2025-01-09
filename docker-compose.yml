@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql_challenge
+    ports:
+      - "2222:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword     # Root password
+      MYSQL_DATABASE: rider_chl_db   # Database to create
+      MYSQL_USER: user                # Non-root user to create
+      MYSQL_PASSWORD: pass        # Password for the user
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      #- ./logs:/logs
+
+  adminer:
+    image: adminer
+    container_name: adminer_chlr_dashboard
+    restart: always
+    ports:
+      - "4004:8080"
