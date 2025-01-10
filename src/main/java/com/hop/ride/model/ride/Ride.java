@@ -24,9 +24,9 @@ public class Ride {
     @OneToOne
     RidePayment payment;
 
-    boolean isSharedRide;
+    boolean isSharedRide = false;
 
-    String Status; //STARTED, ONGOING, COMPLETED, CANCELLED
+    String Status; //CREATED, ONGOING, COMPLETED, CANCELLED
 
     int rating;
 

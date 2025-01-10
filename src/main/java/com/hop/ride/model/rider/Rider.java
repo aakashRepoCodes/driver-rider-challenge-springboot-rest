@@ -1,9 +1,12 @@
 package com.hop.ride.model.rider;
 
+import com.hop.ride.model.ride.Ride;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,5 +23,7 @@ public class Rider {
 
     int riderRating;
 
+    @OneToMany
+    List<Ride> ride;
 
 }
