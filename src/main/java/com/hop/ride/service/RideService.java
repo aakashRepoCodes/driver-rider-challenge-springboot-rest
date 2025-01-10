@@ -2,10 +2,13 @@ package com.hop.ride.service;
 
 import com.hop.ride.NoRideFoundException;
 import com.hop.ride.model.ride.Ride;
+import com.hop.ride.model.rider.Rider;
 import com.hop.ride.repository.RideRepository;
 import com.hop.ride.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,11 +19,24 @@ public class RideService {
     private RideRepository rideRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     UserRepository userRepository;
 
     public String createRide(Ride ride) {
         ride.setStatus("CREATED");
         rideRepository.save(ride);
+        Rider currentUser = userService.getCurrentRider();
+        List<Ride> rides = currentUser.getRide();
+        if (rides != null) {
+            rides.add(ride);
+        }  else {
+            rides = new ArrayList<>();
+            rides.add(ride);
+        }
+        currentUser.setRide(rides);
+        userRepository.save(currentUser);
         return "Ride has been created";
     }
 
@@ -60,9 +76,8 @@ public class RideService {
     }
 
     public List<Ride> getMyRides() {
-        Long loggedInUserId = getCurrentUserId();
-       // return rideRepository.findAllById(loggedInUserId);
-        return Collections.emptyList();
+        Rider loggedInRider = userService.getCurrentRider();
+        return loggedInRider.getRide();
     }
 
     private Ride getRideById(Long rideId) {

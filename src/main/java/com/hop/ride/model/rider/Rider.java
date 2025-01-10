@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class Rider {
     String password;
     String email;
 
-    int riderRating;
+    float riderRating;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     List<Ride> ride;
 
 }

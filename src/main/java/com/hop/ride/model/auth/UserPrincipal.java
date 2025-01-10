@@ -32,4 +32,8 @@ public class UserPrincipal implements UserDetails {
     public String getUsername() {
         return rider.getUsername();
     }
+
+    public Rider getRider() {
+        return rider;
+    }
 }
